@@ -1,0 +1,34 @@
+<?xml version = "1.0"?>
+<?xml-stylesheet type = "text/css" href = "cookbook.css"?>
+		<cookbook>
+				<menu name="Breakfast">
+						<recipe>
+								<title>Scrambled Eggs</title>
+								<rating>3</rating>
+								<directions>mix eggs, add cheese, then cook in a pan</directions>
+								<ingredients>eggs#cheese#</ingredients>
+						</recipe>
+						<recipe>
+								<title>Cereal</title>
+								<rating>4</rating>
+								<directions>pour cereal, add milk</directions>
+								<ingredients>cereal#milk#</ingredients>
+						</recipe>
+				</menu>
+				<menu name="Favorites">
+					<recipe>
+							<title>PB and J</title>
+							<rating>5</rating>
+							<directions>smear peanut butter and jelly on bread, and push them together</directions>
+							<ingredients>peanut butter#jelly#bread#</ingredients>
+					</recipe>
+					</menu>
+				<menu name="Desserts">
+					<recipe>
+							<title>ice cream</title>
+							<rating>5</rating>
+							<directions>scoop ice cream</directions>
+							<ingredients>ice cream#</ingredients>
+					</recipe>
+				</menu>
+		</cookbook>

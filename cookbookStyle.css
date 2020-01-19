@@ -1,0 +1,109 @@
+@import url(http://fonts.googleapis.com/css?family=PT+Serif);
+@import url(http://fonts.googleapis.com/css?family=PT+Sans);
+@import url(http://fonts.googleapis.com/css?family=Aller);
+
+*  {
+	margin-left: 5px;
+	padding: 1px;
+  font-weight: bold;
+}
+
+body {
+  background-color: #e0e0e0;
+	font-family: 'Aller', 'PT Serif', 'PT Sans', sans-serif;
+	font-size: 16px;
+  text-align: center;
+  color: #d0cdd2;
+  font-weight: bold;
+}
+
+h2 {
+  font-weight: bold;
+  display:inline-block;
+  background-color: #e0e0e0;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	font-style:normal;
+	font-size:16px;
+	font-family: 'Aller', 'PT Serif', 'PT Sans', sans-serif;
+}
+
+th {
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+  font-size:18px;
+  border-style:solid;
+  border-width:3px;
+  background-color: #00B7DA;
+  border-color: #000000;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+td {
+  font-weight: bold;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+  font-size:16px;
+  border-style:solid;
+  border-width:3px;
+  border-color: #000000;
+  border-radius: 8px;
+}
+
+.thetable {
+  font-weight: bold;
+	vertical-align: middle;
+  border-collapse:collapse;
+	background-color: #000000;
+  margin-left:auto;
+  margin-right:auto;
+  box-shadow:         3px 3px 5px 8px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+}
+.button{
+	font-weight:bold;
+  transition-duration: 0.4s;
+  background-color: #00B7DA;
+  border: none;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+	font-family: 'Aller', 'PT Serif', 'PT Sans', sans-serif;
+}
+
+.button:hover {
+    background-color: #006a80;
+}
+
+.main_button{
+	font-weight:bold;
+	font-family: 'Aller', 'PT Serif', 'PT Sans', sans-serif;
+  transition-duration: 0.4s;
+  background-color: #00B7DA;
+  border: none;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
+  font-size: 18px;
+  margin: 4px 2px;
+  cursor: pointer;
+  box-shadow: 3px 3px 5px 6px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+}
+.main_button:hover {
+    background-color: #006a80;
+}

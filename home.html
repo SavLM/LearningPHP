@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cookbook</title>
+<link rel = "stylesheet" type = "text/css" href = "cookbookStyle.css"/>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+    // cookbook is opened
+    function requestCookbook()
+    {
+		$.post("getMenus.php", "", function(data)
+		{
+           var name = $(data).find("value").text();
+           addMenus(name);
+        });
+    }
+    // display the menus/categories after opening cookbook
+    function addMenus(name)
+    {
+      $("#theTable tr").remove();
+      var menu_array = name.split('#');
+      l = menu_array.length;
+      for(var i = 0 ; i < l-1 ; i++ ){
+        var temp_menu = '"' + menu_array[i] + '"';
+        var newRow = "<tr><td>" + menu_array[i] + "</td><td><input type = 'button' class='button' value = 'View' onclick = 'requestMenu(" + temp_menu +")'/></td></tr>";
+        $("#theTable").append(newRow);
+      }
+    }
+    // a menu is selected to be viewed
+    function requestMenu(mname)
+    {
+      $.post("getRecipes.php",{menu_name : mname}, function(data){
+             var name = $(data).find("value").text();
+             addRecipes(name, mname);
+          });
+    }
+    // the recipes from the selected menu are displayed
+    function addRecipes(name, mname)
+    {
+      $("#theTable tr").remove();
+      var newRow = "<tr><th colspan='4' align='center' name='menu_title'>"+mname+"</th></tr>";
+      $("#theTable").append(newRow);
+      newRow = "<tr><td>Title</td><td>Rating</td><td>Open</td><td>Delete</td></tr>";
+      $("#theTable").append(newRow);
+      var recipe_array = name.split('#');
+      l = recipe_array.length;
+      var m_name_text = '"' + mname + '"';
+      for(var i = 0 ; i < l-1 ; i++ ){
+        var recipe_info = recipe_array[i].split("+");
+        var temp_recipe = '"' + recipe_info[0] + '"';
+        newRow = "<tr><td>" + recipe_info[0] + "</td><td>"+recipe_info[1]+"</td><td><input type = 'button' class='button' value = 'View' onclick = 'requestRecipe(" + temp_recipe + ")'/></td><td><input type = 'button' class='button' value = 'Delete' onclick = 'deleteRecipe(" + temp_recipe + ", "+ m_name_text +")'/></td></tr>";
+        $("#theTable").append(newRow);
+      }
+      newRow = "<tr><td align='center' colspan='2'><input type = 'button' class='button' value = 'Add' onclick = 'requestAddNewRecipe("+m_name_text+")'/></td><td align='center' colspan='2'><input type = 'button' class='button' value = 'Sort' onclick = 'requestSortRecipes(" + m_name_text + ")'/></td></tr>";
+      $("#theTable").append(newRow);
+    }
+    // a specific recipe is selected to be viewed
+    function requestRecipe(title)
+    {
+      $.post("getRecipePage.php",{recipe_title : title}, function(data){
+             var name = $(data).find("value").text();
+             openRecipe(name);
+          });
+    }
+    // the recipe information is displayed
+    function openRecipe(name)
+    {
+      $("#theTable tr").remove();
+      var recipe_info_array = name.split('+');
+
+      var titleRow = "<tr><th>Title</th><th>" + recipe_info_array[0] + "</th></tr>";
+      var ratingRow = "<tr><td>Rating</td><td>" + recipe_info_array[1] + "</td></tr>";
+      var directionsRow = "<tr><td>Directions</td><td>" + recipe_info_array[2] + "</td></tr>";
+      $("#theTable").append(titleRow);
+      $("#theTable").append(ratingRow);
+      $("#theTable").append(directionsRow);
+
+      var ingredients = recipe_info_array[3];
+      var ingredients_array = ingredients.split('#');
+      l = ingredients_array.length;
+      for(var i = 0 ; i < l-1 ; i++ ){
+        var newRow = "<tr><td>Ingredient</td><td>" + ingredients_array[i] + "</td></tr>";
+        $("#theTable").append(newRow);
+      }
+    }
+    // the user wants to add a new recipe
+    function requestAddNewRecipe(mname)
+    {
+      var m_name_text = '"' + mname + '"';
+      $("#theTable tr").remove();
+      var r = "<tr><th>Title</th><th><input type='text' name='r_title'></th></tr>";
+      $("#theTable").append(r);
+      r  = "<tr><td>Rating</td><td><input type='text' name='r_rating'></td></tr>";
+      $("#theTable").append(r);
+      r = "<tr><td>Directions</td><td><input type='text' name='r_dir'></td></tr>";
+      $("#theTable").append(r);
+      r = "<tr><td>Ingredients (separated by comma) </td><td><input type='text' name='r_ingred'></td></tr>";
+      $("#theTable").append(r);
+      r = "<tr><td colspan='2' align='center'><input type = 'button' class='button' value = 'Add' onclick = 'addNewRecipe("+m_name_text+")'/></td></tr>";
+      $("#theTable").append(r);
+    }
+    // the new recipe is added
+    function addNewRecipe(mname)
+    {
+      var rec_title= document.getElementsByName('r_title')[0].value;
+      var rec_rating= document.getElementsByName('r_rating')[0].value;
+      var rec_dir= document.getElementsByName('r_dir')[0].value;
+      var rec_ingred= document.getElementsByName('r_ingred')[0].value;
+      $.post("addRecipe.php",
+      {
+        m_name : mname,
+        r_title : rec_title,
+        r_rating : rec_rating,
+        r_dir : rec_dir,
+        r_ingred : rec_ingred
+        });
+        alert('Recipe added!');
+      }
+      // a recipe is deleted
+      function deleteRecipe(rtitle, mname)
+      {
+        $.post("deleteRecipe.php",
+        {
+          r_title : rtitle,
+          m_name : mname
+          });
+          alert('Recipe deleted!');
+          requestMenu(mname);
+      }
+      // the recipes are to be sorted
+      function requestSortRecipes(mname)
+      {
+        $.post("getRecipes.php",{menu_name : mname}, function(data){
+               var name = $(data).find("value").text();
+               sortRecipes(name, mname);
+            });
+      }
+      // bubble sort algorithm used to sort the recipes by rating (in descending order)
+      function bblsort(a , b){
+        for (var i = (a.length - 1); i >= 0; i--){
+          for (var j = 1; j <= i; j++){
+            if (a[j-1] > a[j]){
+              var tempa = a[j-1];
+              a[j-1] = a[j];
+              a[j] = tempa;
+              var tempb = b[j-1];
+              b[j-1] = b[j];
+              b[j] = tempb;
+            }
+          }
+        }
+        var s = "";
+        for (var k = 0; k < a.length; k++){
+          s = s + b[k] + "+" + a[k] + "#";
+        }
+        return s;
+      }
+      // the recipes are actually sorted and displayed
+      function sortRecipes(name, mname){
+        $("#theTable tr").remove();
+        var newRow = "<tr><th colspan='4' align='center' name='menu_title'>"+mname+"</th></tr>";
+        $("#theTable").append(newRow);
+        newRow = "<tr><td>Title</td><td>Rating</td><td>Open</td><td>Delete</td></tr>";
+        $("#theTable").append(newRow);
+        var recipe_array = name.split('#');
+        l = recipe_array.length;
+        var m_name_text = '"' + mname + '"';
+
+        var a_array = [];
+        var b_array = [];
+        for(var i = 0 ; i < l-1 ; i++ ){
+          var recipe_info = recipe_array[i].split("+");
+          b_array.push(recipe_info[0]);
+          a_array.push(recipe_info[1]);
+        }
+        var s = bblsort(a_array,b_array);
+
+        var new_recipe_array = s.split('#');
+        l = new_recipe_array.length;
+        var m_name_text = '"' + mname + '"';
+        for(var i = 0 ; i < l-1 ; i++ ){
+          var new_recipe_info = new_recipe_array[i].split("+");
+          var new_temp_recipe = '"' + new_recipe_info[0] + '"';
+          newRow = "<tr><td>" + new_recipe_info[0] + "</td><td>"+new_recipe_info[1]+"</td><td><input type = 'button' class='button' value = 'View' onclick = 'requestRecipe(" + new_temp_recipe + ")'/></td><td><input type = 'button' class='button' value = 'Delete' onclick = 'deleteRecipe(" + new_temp_recipe + ", "+ m_name_text +")'/></td></tr>";
+          $("#theTable").append(newRow);
+        }
+        newRow = "<tr><td align='center' colspan='2'><input type = 'button' class='button' value = 'Add' onclick = 'requestAddNewRecipe("+m_name_text+")'/></td><td align='center' colspan='2'><input type = 'button' class='button' value = 'Sort' onclick = 'requestSortRecipes(" + m_name_text + ")'/></td></tr>";
+        $("#theTable").append(newRow);
+
+      }
+
+</script>
+</head>
+<body>
+<center>
+<h2>
+<input type = 'button' class='main_button' value = "Show Cookbook" onclick = 'requestCookbook()'/>
+</h2>
+<table id = "theTable" border = "1" class="thetable">
+</table>
+</center>
+<script type="text/javascript">
+    var theWords = new Array(), wordCount = 0;
+</script>
+</body>
+</html>
