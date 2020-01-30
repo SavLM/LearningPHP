@@ -1,0 +1,23 @@
+<used_cars> 
+
+	<car> 
+
+		<type> Porche </type> 
+
+		<transmission> manual </transmission> 
+
+		<color> black </color> 
+
+	</car> 
+
+	<car> 
+
+		<type> Ford </type> 
+
+		<transmission> automatic </transmission> 
+
+		<color> blue </color> 
+
+	</car>
+
+</used_cars>
