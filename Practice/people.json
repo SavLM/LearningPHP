@@ -1,29 +1,34 @@
 {
-  "people" : {
-    "Person" : {
-      "Name" : "Adam J. Smith",
-      "Initials" : "AJS",
-      "Age" : 56
-    },
-    "Person" : {
-      "Name" : "Donna T. Jeffries",
-      "Initials" : "DTJ",
-      "Age" : 43
-    },
-    "Person" : {
-      "Name" : "Pablo R. Lazlo",
-      "Initials" : "PRL",
-      "Age" : 36
-    },
-    "Person" : {
-      "Name" : "Laia Organa",
-      "Initials" : "LO",
-      "Age" : 60
-    },
-    "Person" : {
-      "Name" : "Harry Potter",
-      "Initials" : "HS",
-      "Age" : 30
-    }
-  }
+    "people": [
+        {
+            "name": "Smith, Adam J.",
+            "initials": "AJS",
+            "age": 56
+        },
+        {
+            "name": "Smith, Tanya L.",
+            "initials": "TLS",
+            "age": 43
+        },
+        {
+            "name" : "Jeffries, Donna T.",
+            "initials" : "DTJ",
+            "age" : 47
+        },
+        {
+            "name" : "Lazlo, Pablo R.",
+            "initials" : "PRL",
+            "age" : 36
+        },
+        {
+            "name" : "Organa, Leia",
+            "initials" : "LO",
+            "age" : 60
+        },
+        {
+            "name" : "Potter, Harry",
+            "initials" : "HS",
+            "age" : 30
+        }
+    ]
 }

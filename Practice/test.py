@@ -69,3 +69,12 @@ p_obj = json.loads(j_str_p)
 print(p_obj['2'])
 
 ###################
+
+people_data = 0
+with open('people.json') as f:
+    people_data= json.load(f)
+    for people in people_data['people']:
+        del people['initials']
+sorted_data = sorted(people_data['people'], key = lambda i: i['name'])
+with open('new_people.json', 'w') as f:
+    json.dump(sorted_data, f, indent=2)
